@@ -55,7 +55,7 @@ pipeline {
 
             stage('wait 200') {
                 steps {
-                    sh 'sleep 200'
+                    sh 'sleep 20'
                 }
             }
 
