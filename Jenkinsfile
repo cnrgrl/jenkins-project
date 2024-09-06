@@ -46,7 +46,7 @@ pipeline {
                 steps {
                     echo 'build infra with tf'
                     sh '''
-                    cd create-k8s-cluster
+                    cd create-kube-cluster-terraform
                     terraform init
                     terraform apply --auto-approve
                     '''
