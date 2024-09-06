@@ -61,7 +61,7 @@ pipeline {
 
             stage('Deploy the App') {
                 environment {
-                    MYKEY     = credentials('project-207')
+                    MYKEY     = credentials('cnr-key-1')
                 }
                 steps {
                     sh 'ansible-playbook playbook.yml --private-key $MYKEY'
