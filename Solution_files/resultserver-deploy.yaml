@@ -14,8 +14,10 @@ spec:
       labels:
         app: resultserver-deploy
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
-      - image: 3842051638/resultserver
+      - image: 381491962559.dkr.ecr.us-east-1.amazonaws.com/clarusway-repo/phonebook-app:result
         name: resultserver
         ports:
         - containerPort: 80

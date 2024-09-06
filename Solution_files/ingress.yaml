@@ -24,3 +24,5 @@ spec:
             name: resultserver-svc
             port:
               number: 80
+
+# bu projede önemi yok aslinda, 

@@ -14,8 +14,10 @@ spec:
       labels:
         app: webserver-deploy
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
-      - image: 3842051638/webserver
+      - image: 381491962559.dkr.ecr.us-east-1.amazonaws.com/clarusway-repo/phonebook-app:web
         name: webserver
         ports:
         - containerPort: 80

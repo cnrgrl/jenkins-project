@@ -1,0 +1,15 @@
+- name: deploy phonebook app
+  hosts: _kube_master
+  remote_user: ubuntu
+  tasks:
+    - name: copy k8s files
+      ansible.builtin.copy:
+        src: Solution_files/
+        dest: /home/ubuntu/k8s/
+
+    - name: deploy app
+      ansible.builtin.shell: |
+        export PATH=/usr/local/bin:$PATH
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 381491962559.dkr.ecr.us-east-1.amazonaws.com
+        kubectl create secret generic regcred --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json --type=kubernetes.io/dockerconfigjson
+        kubectl apply -f k8s/
