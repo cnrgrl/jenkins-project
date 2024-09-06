@@ -17,8 +17,8 @@ data "aws_region" "current" {}
 
 locals {
   # change here, optional
-  name = "clarus"
-  keyname = "clarusway"
+  name = "cnr"
+  keyname = "project-207"
   instancetype = "t3a.medium"
   ami = "ami-0a0e5d9c7acc336f1"
 }
@@ -96,6 +96,8 @@ resource "aws_iam_role" "ec2connectcli" {
       ]
     })
   }
+
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"]
 }
 
 resource "aws_security_group" "tf-k8s-master-sec-gr" {
