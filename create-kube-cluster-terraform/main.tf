@@ -18,7 +18,7 @@ data "aws_region" "current" {}
 locals {
   # change here, optional
   name = "cnr"
-  keyname = "project-207"
+  keyname = "cnr-key-1"
   instancetype = "t3a.medium"
   ami = "ami-0a0e5d9c7acc336f1"
 }
