@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME="phonebook"
+        APP_REPO_NAME="clarusway-repo/${APP_NAME}-app"
+        AWS_ACCOUNT_ID=sh(script:'aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
+        AWS_REGION="us-east-1"
+        ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        }
+
+        stages {
+
+            stage('build k8s cluster') {
+                agent {
+                    docker { image 'olivercw/tf-agent' }
+                }
+                steps {
+                    echo 'build infra with tf'
+                    sh '''
+                    cd create-k8s-cluster
+                    terraform destroy --auto-approve
+                    '''
+                }
+            }
+
+            stage('Destroy the infrastructure'){
+                steps{
+                    sh '''
+                    aws ecr delete-repository \
+                    --repository-name ${APP_REPO_NAME} \
+                    --region ${AWS_REGION} \
+                    --force
+                    '''
+                echo 'Deleting all local images'
+                sh 'docker image prune -af'
+            }
+        }
+
+    }
+
+}
